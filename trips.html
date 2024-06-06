@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Traingazer</title>
+
+        <!-- bootstrap  -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body class="container">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <h1 class="text-center">Train sightseeing times</h1>
+                <h2 class="text-center">Trip information</h2>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table col-12 p-2">
+                <thead class="header">
+                    <tr>
+                        <th>Trip Attribute</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Feed</th>
+                        <td id="trip-feed"></td>
+                    </tr>
+                    <tr>
+                        <th>GTFS Trip ID</th>
+                        <td id="trip-id"></td>
+                    </tr>
+                    <tr>
+                        <th>GTFS Route ID</th>
+                        <td id="trip-route-id"></td>
+                    </tr>
+                    <tr>
+                        <th>Trip Short Name</th>
+                        <td id="trip-short-name"></td>
+                    </tr>
+                    <tr>
+                        <th>Trip Headsign</th>
+                        <td id="trip-headsign"></td>
+                    </tr>
+                    <tr>
+                        <th>First StopTime</th>
+                        <td id="trip-first-stoptime"></td>
+                    </tr>
+                    <tr>
+                        <th>Last StopTime</th>
+                        <td id="trip-last-stoptime"></td>
+                    </tr>
+                    <tr>
+                        <th>Regular Service Start</th>
+                        <td id="trip-service-start"></td>
+                    </tr>
+                    <tr>
+                        <th>Regular Service End</th>
+                        <td id="trip-service-end"></td>
+                    </tr>
+                    <tr>
+                        <th>Regular Service Weekdays</th>
+                        <td id="trip-service-weekdays"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="col-12 p-2">
+                <h2 class="text-center">Service Exceptions</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="service-exceptions">
+                        <!-- should be filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 p-2">
+                <h2 class="text-center">
+                    StopTimes on this trip
+                </h2>
+            </div>
+            <table class="table col-12 p-2">
+                <thead class="header">
+                    <th>Station</th>
+                    <th>Arrival Time</th>
+                    <th>Departure Time</th>
+                </thead>
+                <tbody id="trip-stoptimes">
+                    <!-- should be filled by JS -->
+                </tbody>
+            </table>
+        </div>
+        
+    
+        <!-- our custom JS  -->
+        <script src="/js/utils.js"></script>
+        <script src="/js/trips.js"></script>
+    </body>
+</html>

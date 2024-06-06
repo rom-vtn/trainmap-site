@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Traingazer</title>
+
+        <!-- bootstrap  -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="/js/bootstrap.bundle.min.js"></script>
+
+        <!-- leaflet  -->
+        <link rel="stylesheet" href="/css/leaflet.css"/>
+
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body class="container">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <h1 class="text-center">Train sightseeing times</h1>
+            </div>
+        </div>
+        <div class="row">
+            <!-- this is the map container -->
+            <div id="map">
+                <!-- leaflet  -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-6 p-2">
+                <h2>Pick a location on the map and click the button!</h2>
+                <p>Current location: <span id="current-location">[not yet defined]</span></p>
+                <button id="query-traffic" class="btn btn-primary">Find out!</button>
+                <input type="date" name="date" id="date">
+                <button class="btn btn-primary" id="prevpage">Previous page</button>
+                <button class="btn btn-primary" id="nextpage">Next page</button>
+            </div>
+            <div class="col-12 col-lg-6 p-2">
+                <h3>Current datasets:</h3>
+                <ul>
+                    <li>🇫🇷 SNCF (TER, TGV, IC)</li>
+                    <li>🇩🇪 DB (Fern-, Regionalverkehr)</li>
+                    <li>🇱🇺 CFL</li>
+                    <li>Might add some later idk</li>
+                </ul>
+            </div>
+            <table class="table col-12">
+                <thead class="header">
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Feed</th>
+                        <th>Type</th>
+                        <th>Line</th>
+                        <th><abbr title="Bearing proximity status">Be</abbr></th>
+                        <th><abbr title="Relative line distance status">Rel</abbr></th>
+                        <th><abbr title="Absolute line distance status">Abs</abbr></th>
+                        <th><abbr title="Has close station?">HCS</abbr></th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Previous stop</th>
+                        <th>Next stop</th>
+                    </tr>
+                </thead>
+                <div id="spinner" class="hidden m-auto spinner-border text-primary" role="status">
+                    <span class="sr-only"></span>
+                </div>
+                <tbody id="entries">
+                    <tr><th>No entries yet.</th></tr>
+                </tbody>
+            </table>
+            <footer class="col-12 mt-auto py-3">
+                <p class="text-center">By Romane with 💙</p>
+            </footer>
+        </div>
+        
+        
+        <!-- leaflet  -->
+        <script src="/js/leaflet.js"></script>
+
+        <!-- our custom JS  -->
+        <script src="/js/utils.js"></script>
+        <script src="/js/index.js"></script>
+    </body>
+</html>

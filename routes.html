@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Traingazer</title>
+
+        <!-- bootstrap  -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body class="container">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <h1 class="text-center">Train sightseeing times</h1>
+                <h2 class="text-center">Route information</h2>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table col-12 p-2">
+                <thead class="header">
+                    <tr>
+                        <th>Route Attribute</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Feed</th>
+                        <td id="route-feed"></td>
+                    </tr>
+                    <tr>
+                        <th>GTFS Route ID</th>
+                        <td id="route-id"></td>
+                    </tr>
+                    <tr>
+                        <th>Route Short Name</th>
+                        <td id="route-short-name"></td>
+                    </tr>
+                    <tr>
+                        <th>Route Long Name</th>
+                        <td id="route-long-name"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="col-12 p-2">
+                <h2 class="text-center">
+                    Trips on this route
+                </h2>
+            </div>
+            <table class="table col-12 p-2">
+                <thead class="header">
+                    <th>GTFS Trip ID</th>
+                    <th>Start StopTime</th>
+                    <th>End StopTime</th>
+                </thead>
+                <tbody id="route-trips">
+                    <!-- should be filled by JS -->
+                </tbody>
+            </table>
+        </div>
+        
+    
+        <!-- our custom JS  -->
+        <script src="/js/utils.js"></script>
+        <script src="/js/routes.js"></script>
+    </body>
+</html>

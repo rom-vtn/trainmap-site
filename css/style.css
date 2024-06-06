@@ -1,0 +1,20 @@
+#map {
+    height: 50vh;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+tbody tr {
+    height: 4.5rem;
+}
+
+/* tbody>tr>td * {
+    margin: auto;
+} */

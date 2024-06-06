@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Traingazer</title>
+
+        <!-- bootstrap  -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body class="container">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <h1 class="text-center">Train sightseeing times</h1>
+                <h2 class="text-center">Stop information</h2>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table col-12 p-2">
+                <thead class="header">
+                    <tr>
+                        <th>Stop Attribute</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Feed</th>
+                        <td id="stop-feed"></td>
+                    </tr>
+                    <tr>
+                        <th>GTFS Stop ID</th>
+                        <td id="stop-id"></td>
+                    </tr>
+                    <tr>
+                        <th>Stop Name</th>
+                        <td id="stop-name"></td>
+                    </tr>
+                    <tr>
+                        <th>Parent Stop</th>
+                        <td id="stop-parent"></td>
+                    </tr>
+                    <tr>
+                        <th>Latitude</th>
+                        <td id="stop-lat"></td>
+                    </tr>
+                    <tr>
+                        <th>Longitude</th>
+                        <td id="stop-lon"></td>
+                    </tr>
+                    <tr>
+                        <th>Observation</th>
+                        <td id="observation-button"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="col-12 p-2">
+                <h2 class="text-center">Child Stations</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Station</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stop-children">
+                        <!-- should be filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 p-2">
+                <h2 class="text-center">
+                    GTFS StopTimes at this stop (check service levels!)
+                </h2>
+            </div>
+            <table class="table col-12 p-2">
+                <thead class="header">
+                    <th>GTFS Trip ID</th>
+                    <th>Arrival Time</th>
+                    <th>Departure Time</th>
+                </thead>
+                <tbody id="stop-stoptimes">
+                    <!-- should be filled by JS -->
+                </tbody>
+            </table>
+        </div>
+        
+    
+        <!-- our custom JS  -->
+        <script src="/js/utils.js"></script>
+        <script src="/js/stops.js"></script>
+    </body>
+</html>
