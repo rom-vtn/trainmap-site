@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             setValueAtId("trip-service-start", getDate(trip.calendar.start_date));
             setValueAtId("trip-service-end", getDate(trip.calendar.end_date));
             setValueAtId("trip-service-weekdays", getWeekdays(trip.calendar));
+            setValueAtId("observation-button", `<a class="btn btn-primary" href="/tripobserve.html?feed_id=${trip.feed_id}&trip_id=${trip.trip_id}">Observe!</a>`, true);
 
             setTitle("Trip: ", `${trip.stop_times[0].stop.stop_name} - ${trip.stop_times[trip.stop_times.length-1].stop.stop_name}`);
 

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Traingazer</title>
+
+        <!-- bootstrap  -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="/js/bootstrap.bundle.min.js"></script>
+
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <body class="container">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <h1 class="text-center">Train sightseeing times</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 p-2">
+                <input type="date" name="date" id="date">
+                <button class="btn btn-primary" id="prevpage">Previous page</button>
+                <button class="btn btn-primary" id="nextpage">Next page</button>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table col-12">
+                <thead class="header">
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Feed</th>
+                        <th>Type</th>
+                        <th>Line</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Previous stop</th>
+                        <th>Next stop</th>
+                    </tr>
+                </thead>
+                <div id="spinner" class="hidden m-auto spinner-border text-primary" role="status">
+                    <span class="sr-only"></span>
+                </div>
+                <tbody id="entries">
+                    <tr><th>No entries yet.</th></tr>
+                </tbody>
+            </table>
+            <footer class="col-12 mt-auto py-3">
+                <p class="text-center">By Romane with 💙</p>
+            </footer>
+        </div>
+        
+        <!-- our custom JS  -->
+        <script src="/js/utils.js"></script>
+        <script src="/js/tripobserve.js"></script>
+    </body>
+</html>
