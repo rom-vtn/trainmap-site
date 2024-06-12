@@ -25,6 +25,25 @@ function formatRouteType(routeType) {
     return content;
 }
 
+function formatStatus(pt) {
+    const stopTimes = pt.sight.trip.stop_times;
+    if (pt.timestamp < stopTimes[0].departure_time) {
+        return "About to start";
+    }
+    let prevStopTime;
+    for (const stopTime of stopTimes) {
+        if (pt.timestamp < stopTime.arrival_time) {
+            //on its way prevStopTime and stopTime
+            return `Between ${formatStopTime(prevStopTime, false)} and ${formatStopTime(stopTime, true)}`;
+        }
+        if (pt.timestamp < stopTime.departure_time) {
+            return `Stopped at ${formatStopTime(stopTime, true)}`
+        }
+        prevStopTime = stopTime;
+    }
+    return "Just arrived";
+}
+
 function displayPage(pageNumber) {
     document.getElementById("entries").innerHTML = "";
     let lines = "";
@@ -38,7 +57,7 @@ function displayPage(pageNumber) {
             <td>${formatStopTime(pt.sight.first_st, false)}</td>
             <td>${formatStopTime(pt.sight.last_st, true)}</td>
             <td>${Math.floor(pt.sight.distance_km*1000)} m</td>
-            <td>[TODO]</td>
+            <td>${formatStatus(pt)}</td>
         </tr>`
         lines += line
     }
