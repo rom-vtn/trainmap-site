@@ -37,7 +37,7 @@ function displayPage(pageNumber) {
             <td style="${getRouteColorCss(pt.sight.trip.route)}">${pt.sight.route_name}</td>
             <td>${formatStopTime(pt.sight.first_st, false)}</td>
             <td>${formatStopTime(pt.sight.last_st, true)}</td>
-            <td>${Math.floor(pt.sight.distance*1000)} m</td>
+            <td>${Math.floor(pt.sight.distance_km*1000)} m</td>
             <td>[TODO]</td>
         </tr>`
         lines += line
