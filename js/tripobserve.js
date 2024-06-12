@@ -37,7 +37,7 @@ function displayPage(pageNumber) {
             <td style="${getRouteColorCss(pt.sight.trip.route)}">${pt.sight.route_name}</td>
             <td>${formatStopTime(pt.sight.first_st, false)}</td>
             <td>${formatStopTime(pt.sight.last_st, true)}</td>
-            <td>[TODO]</td>
+            <td>${Math.floor(pt.sight.distance*1000)} m</td>
             <td>[TODO]</td>
         </tr>`
         lines += line
@@ -47,7 +47,6 @@ function displayPage(pageNumber) {
 
 function sightsApiCall() {
     document.getElementById("spinner").classList.remove("hidden");
-    
     fetch(`/api/aboard/${window.feedId}/${window.tripId}`)
     .then(function(response) {
         return response.json();
@@ -61,13 +60,14 @@ function sightsApiCall() {
         window.sights = jsonResponse.sights;
         displayPage(0);
         document.getElementById("spinner").classList.add("hidden");
-        
     })
 }
 
 document.addEventListener("DOMContentLoaded", ()=>{
-    window.feedId = parseFloat(findGetParameter("feed_id"));
-    window.tripId = parseFloat(findGetParameter("trip_id"));
+    window.feedId = findGetParameter("feed_id");
+    window.tripId = findGetParameter("trip_id");
+
+    console.log(window.feedId, window.tripId);
 
     document.getElementById("nextpage").addEventListener("click", nextPage)
     document.getElementById("prevpage").addEventListener("click", previousPage)
