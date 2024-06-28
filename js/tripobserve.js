@@ -97,7 +97,7 @@ function sightsApiCall() {
         const sights = jsonResponse.sights;
         while (stopTimeIndex < stopTimes.length || sightIndex < sights.length) {
             let shouldHandleSight = (stopTimeIndex == stopTimes.length);
-            if (!shouldHandleSight) {
+            if (!shouldHandleSight && sightIndex != sights.length) {
                 const nextStopTimeTimestamp = isStopTimeArrival ? stopTimes[stopTimeIndex].arrival_time : stopTimes[stopTimeIndex-1].departure_time;
                 const nextSightTimestamp = sights[sightIndex].timestamp;
                 shouldHandleSight = (nextSightTimestamp.slice(11,19) < nextStopTimeTimestamp.slice(11,19)); //compare the time parts
