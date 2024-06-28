@@ -64,8 +64,11 @@ function displayPage(pageNumber) {
                 <td>${formatStatus(pt)}</td>
             </tr>`;
         } else {
+            const timestamp = event.isArrival ? event.content.arrival_time : event.content.departure_time;//NOTE: only contains time part, date is unix epoch
             line = `<tr>
-                <td colspan="9">${event.isArrival?"Arrival in":"Departure from"} ${formatStopTime(event.content, event.isArrival)}</td>
+                <td></td>
+                <td>${getTime(timestamp)}</td>
+                <td colspan="7">${event.isArrival?"Arrival in":"Departure from"} ${formatStop(event.content.stop)}</td>
             </tr>`
         }
         lines += line
