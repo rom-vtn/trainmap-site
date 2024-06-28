@@ -47,18 +47,27 @@ function formatStatus(pt) {
 function displayPage(pageNumber) {
     document.getElementById("entries").innerHTML = "";
     let lines = "";
-    for (const pt of window.sights.slice(PAGE_LENGTH*pageNumber, PAGE_LENGTH*(pageNumber+1))) {
-        const line = `<tr>
-            <td>${getDate(pt.timestamp)}</td>
-            <td>${getTime(pt.timestamp)}</td>
-            <td><a href="/trips.html?feed_id=${pt.sight.feed_id}&trip_id=${pt.sight.trip.trip_id}">${pt.sight.feed.display_name}</a></td>
-            <td>${formatRouteType(pt.sight.trip.route.type)}</td>
-            <td style="${getRouteColorCss(pt.sight.trip.route)}">${pt.sight.route_name}</td>
-            <td>${formatStopTime(pt.sight.first_st, false)}</td>
-            <td>${formatStopTime(pt.sight.last_st, true)}</td>
-            <td>${Math.floor(pt.sight.distance_km*1000)} m</td>
-            <td>${formatStatus(pt)}</td>
-        </tr>`
+    // for (const pt of window.sights.slice(PAGE_LENGTH*pageNumber, PAGE_LENGTH*(pageNumber+1))) {
+    for (const event of window.journeyEvents.slice(PAGE_LENGTH.pageNumber, PAGE_LENGTH*(pageNumber+1))) {
+        let line;
+        if (event.isSight) {
+            const pt = event.content;
+            line = `<tr>
+                <td>${getDate(pt.timestamp)}</td>
+                <td>${getTime(pt.timestamp)}</td>
+                <td><a href="/trips.html?feed_id=${pt.sight.feed_id}&trip_id=${pt.sight.trip.trip_id}">${pt.sight.feed.display_name}</a></td>
+                <td>${formatRouteType(pt.sight.trip.route.type)}</td>
+                <td style="${getRouteColorCss(pt.sight.trip.route)}">${pt.sight.route_name}</td>
+                <td>${formatStopTime(pt.sight.first_st, false)}</td>
+                <td>${formatStopTime(pt.sight.last_st, true)}</td>
+                <td>${Math.floor(pt.sight.distance_km*1000)} m</td>
+                <td>${formatStatus(pt)}</td>
+            </tr>`;
+        } else {
+            line = `<tr>
+                <td colspan="9">${event.isArrival?"Arrival in":"Departure from"} ${formatStopTime(event.content, event.isArrival)}</td>
+            </tr>`
+        }
         lines += line
     }
     setValueAtId("entries", lines, true);
@@ -77,6 +86,29 @@ function sightsApiCall() {
             return
         }
         window.sights = jsonResponse.sights;
+        window.journeyEvents = [];
+        let stopTimeIndex = 1; //start at 1 bc we're between [0].departure and [1].arrival
+        let sightIndex = 0; 
+        let isStopTimeArrival = false;
+        const stopTimes = jsonResponse.trip.stop_times;
+        const sights = jsonResponse.sights;
+        while (stopTimeIndex < stopTimes.length || sightIndex < sights.length) {
+            let shouldHandleSight = (stopTimeIndex == stopTimes.length);
+            if (!shouldHandleSight) {
+                const nextStopTimeTimestamp = isStopTimeArrival ? stopTimes[stopTimeIndex].arrival_time : stopTimes[stopTimeIndex-1].departure_time;
+                const nextSightTimestamp = sights[sightIndex].timestamp;
+                shouldHandleSight = (nextSightTimestamp.slice(11,19) < nextStopTimeTimestamp.slice(11,19)); //compare the time parts
+            }
+            if (shouldHandleSight) {
+                window.journeyEvents.push({isSight: true, content: sights[sightIndex++]})
+            } else {
+                window.journeyEvents.push({isSight: false, content: stopTimes[isStopTimeArrival?stopTimeIndex:(stopTimeIndex-1)], isArrival: isStopTimeArrival});
+                if (isStopTimeArrival) {
+                    stopTimeIndex++; //only increment if we switch from departure to next stoptime's arrival
+                }
+                isStopTimeArrival = !isStopTimeArrival; //don't forget to invert
+            }
+        }
         displayPage(0);
         document.getElementById("spinner").classList.add("hidden");
     })
