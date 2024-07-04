@@ -47,10 +47,6 @@ function displayPage(pageNumber) {
             <td><a href="/trips.html?feed_id=${pt.sight.feed_id}&trip_id=${pt.sight.trip.trip_id}">${pt.sight.feed.display_name}</a></td>
             <td>${formatRouteType(pt.sight.trip.route.type)}</td>
             <td style="${getRouteColorCss(pt.sight.trip.route)}">${pt.sight.route_name}</td>
-            <td>${nullableBoolToEmoji(pt.sight.has_bearing)}</td>
-            <td>${nullableBoolToEmoji(pt.sight.has_relative)}</td>
-            <td>${nullableBoolToEmoji(pt.sight.has_absolute)}</td>
-            <td>${nullableBoolToEmoji(pt.sight.has_close_stop)}</td>
             <td>${formatStopTime(pt.sight.first_st, false)}</td>
             <td>${formatStopTime(pt.sight.last_st, true)}</td>
             <td>${formatStopTime(pt.sight.st_before, false)}</td>
