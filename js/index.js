@@ -40,17 +40,19 @@ function formatRouteType(routeType) {
 function displayPage(pageNumber) {
     document.getElementById("entries").innerHTML = "";
     let lines = "";
-    for (const pt of window.sights.slice(PAGE_LENGTH*pageNumber, PAGE_LENGTH*(pageNumber+1))) {
-        const line = `<tr>
-            <td>${getDate(pt.timestamp)}</td>
-            <td>${getTime(pt.timestamp)}</td>
-            <td><a href="/trips.html?feed_id=${pt.sight.feed_id}&trip_id=${pt.sight.trip.trip_id}">${pt.sight.feed.display_name}</a></td>
-            <td>${formatRouteType(pt.sight.trip.route.type)}</td>
-            <td style="${getRouteColorCss(pt.sight.trip.route)}">${pt.sight.route_name}</td>
-            <td>${formatStopTime(pt.sight.first_st, false)}</td>
-            <td>${formatStopTime(pt.sight.last_st, true)}</td>
-            <td>${formatStopTime(pt.sight.st_before, false)}</td>
-            <td>${formatStopTime(pt.sight.st_after, true)}</td>
+    const sightSlice = window.sights.slice(PAGE_LENGTH*pageNumber, PAGE_LENGTH*(pageNumber+1))
+    for (const inSliceIndex in sightSlice) {
+        const realTrainSight = sightSlice[inSliceIndex]
+        const line = `<tr id="sight-row-${(+PAGE_LENGTH)*(+pageNumber) + (+inSliceIndex)}">
+            <td>${getDate(realTrainSight.timestamp)}</td>
+            <td>${getTime(realTrainSight.timestamp)}</td>
+            <td><a href="/trips.html?feed_id=${realTrainSight.sight.feed_id}&trip_id=${realTrainSight.sight.trip.trip_id}">${realTrainSight.sight.feed.display_name}</a></td>
+            <td>${formatRouteType(realTrainSight.sight.trip.route.type)}</td>
+            <td style="${getRouteColorCss(realTrainSight.sight.trip.route)}">${realTrainSight.sight.route_name}</td>
+            <td>${formatStopTime(realTrainSight.sight.first_st, false)}</td>
+            <td>${formatStopTime(realTrainSight.sight.last_st, true)}</td>
+            <td>${formatStopTime(realTrainSight.sight.st_before, false)}</td>
+            <td>${formatStopTime(realTrainSight.sight.st_after, true)}</td>
         </tr>`
         lines += line
     }
@@ -73,10 +75,32 @@ function sightsApiCall() {
             return
         }
         window.sights = jsonResponse.passing_times;
-        displayPage(0);
-        document.getElementById("spinner").classList.add("hidden");
-        
+        scrollToLatest();
+        document.getElementById("spinner").classList.add("hidden");  
     })
+}
+
+function scrollToLatest() {
+    //FIXME fix the timezone issue
+    //temp solution is to add a 2hr offset since we're at UTC+2
+    let scrollRow = null;
+    const thresholdMs = Date.parse(new Date().toISOString()) + 1000 * 3600 * 2
+    for (i in window.sights) {
+        const realSight = window.sights[i]
+        const sightTimestampMs = Date.parse(realSight.timestamp);
+        if (sightTimestampMs < thresholdMs) {
+            continue
+        }
+        scrollRow = i
+        break
+    }
+    if (scrollRow === null) {
+        displayPage(0);
+    } else {
+        let pageNumber = Math.floor(i / PAGE_LENGTH)
+        displayPage(pageNumber)
+        scrolls(`#sight-row-${scrollRow}`, null); //uses scrolls.js
+    }
 }
 
 document.addEventListener("DOMContentLoaded", ()=>{
