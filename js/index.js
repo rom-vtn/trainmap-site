@@ -99,7 +99,9 @@ function scrollToLatest() {
     } else {
         let pageNumber = Math.floor(i / PAGE_LENGTH)
         displayPage(pageNumber)
-        scrolls(`#sight-row-${scrollRow}`, null); //uses scrolls.js
+        scrolls(`#sight-row-${scrollRow}`, {
+            offsetDistance: -100
+        }); //uses scrolls.js
     }
 }
 
