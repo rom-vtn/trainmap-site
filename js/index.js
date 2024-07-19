@@ -8,6 +8,10 @@ const defaultCoords = [48.992847, 8.401682];
 function onMapClick(e) {
     document.getElementById("current-location").innerText = [e.latlng.lat, e.latlng.lng].toString()
     window.currentMarker.setLatLng(e.latlng)
+    
+    //update URL
+    //add auto query on load and discard current name
+    window.history.replaceState({}, null, `?auto_query=1&lat=${e.latlng.lat}&lon=${e.latlng.lng}`)
 }
 
 const PAGE_LENGTH = 1000;
@@ -107,7 +111,7 @@ function scrollToLatest() {
 
 document.addEventListener("DOMContentLoaded", ()=>{
     let coordArr;
-    const title = findGetParameter("name");7
+    const title = findGetParameter("name");
     if (title) {
         setTitle("Watching", title)
     }
