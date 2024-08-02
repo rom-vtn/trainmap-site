@@ -50,6 +50,10 @@ function displayPage(pageNumber) {
     // for (const pt of window.sights.slice(PAGE_LENGTH*pageNumber, PAGE_LENGTH*(pageNumber+1))) {
     for (const event of window.journeyEvents.slice(PAGE_LENGTH.pageNumber, PAGE_LENGTH*(pageNumber+1))) {
         let line;
+        let lateSeconds = parseInt(document.getElementById("late-seconds").value)
+        if (isNaN(lateSeconds)) {
+            lateSeconds = 0
+        }
         if (event.isSight) {
             const pt = event.content;
             line = `<tr>
@@ -64,7 +68,9 @@ function displayPage(pageNumber) {
                 <td>${formatStatus(pt)}</td>
             </tr>`;
         } else {
-            const timestamp = event.isArrival ? event.content.arrival_time : event.content.departure_time;//NOTE: only contains time part, date is unix epoch
+            var timestamp = event.isArrival ? event.content.arrival_time : event.content.departure_time;//NOTE: only contains time part, date is unix epoch
+            timestamp = new Date(timestamp)
+            timestamp = new Date(timestamp.getTime() + 1000 * lateSeconds)
             line = `<tr>
                 <td></td>
                 <td>${getTime(timestamp)}</td>
@@ -78,7 +84,12 @@ function displayPage(pageNumber) {
 
 function sightsApiCall() {
     document.getElementById("spinner").classList.remove("hidden");
-    fetch(`/api/aboard/${window.feedId}/${window.tripId}`)
+    let date = document.getElementById("date").value;
+    if (date === "") {
+        date = getDate(new Date());
+    }
+    let lateSeconds = document.getElementById("late-seconds").value;
+    fetch(`/api/aboard/${window.feedId}/${window.tripId}/${date}/${lateSeconds}`)
     .then(function(response) {
         return response.json();
     })
@@ -99,8 +110,8 @@ function sightsApiCall() {
             let shouldHandleSight = (stopTimeIndex == stopTimes.length);
             if (!shouldHandleSight && sightIndex != sights.length) {
                 const nextStopTimeTimestamp = isStopTimeArrival ? stopTimes[stopTimeIndex].arrival_time : stopTimes[stopTimeIndex-1].departure_time;
-                const nextSightTimestamp = sights[sightIndex].timestamp;
-                shouldHandleSight = (nextSightTimestamp.slice(11,19) < nextStopTimeTimestamp.slice(11,19)); //compare the time parts
+                var nextSightTimestamp = new Date(new Date(sights[sightIndex].timestamp).getTime() + 1000 * lateSeconds);
+                shouldHandleSight = (nextSightTimestamp.toISOString().slice(11,19) < nextStopTimeTimestamp.slice(11,19)); //compare the time parts
             }
             if (shouldHandleSight) {
                 window.journeyEvents.push({isSight: true, content: sights[sightIndex++]})
