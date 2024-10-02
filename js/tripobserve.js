@@ -69,11 +69,11 @@ function displayPage(pageNumber) {
             </tr>`;
         } else {
             var timestamp = event.isArrival ? event.content.arrival_time : event.content.departure_time;//NOTE: only contains time part, date is unix epoch
-            timestamp = new Date(timestamp)
+            timestamp = pretendUtc(timestamp)
             timestamp = new Date(timestamp.getTime() + 1000 * lateSeconds)
             line = `<tr>
                 <td></td>
-                <td>${getTime(timestamp)}</td>
+                <td>${getTime(timestamp.toISOString())}</td>
                 <td colspan="7">${event.isArrival?"Arrival in":"Departure from"} ${formatStop(event.content.stop)}</td>
             </tr>`
         }
@@ -86,7 +86,7 @@ function sightsApiCall() {
     document.getElementById("spinner").classList.remove("hidden");
     let date = document.getElementById("date").value;
     if (date === "") {
-        date = getDate(new Date());
+        date = getDate(new Date().toISOString());
     }
     let lateSeconds = document.getElementById("late-seconds").value;
     fetch(`/api/aboard/${window.feedId}/${window.tripId}/${date}/${lateSeconds}`)
@@ -109,9 +109,10 @@ function sightsApiCall() {
         while (stopTimeIndex < stopTimes.length || sightIndex < sights.length) {
             let shouldHandleSight = (stopTimeIndex == stopTimes.length);
             if (!shouldHandleSight && sightIndex != sights.length) {
-                const nextStopTimeTimestamp = isStopTimeArrival ? stopTimes[stopTimeIndex].arrival_time : stopTimes[stopTimeIndex-1].departure_time;
-                var nextSightTimestamp = new Date(new Date(sights[sightIndex].timestamp).getTime() + 1000 * lateSeconds);
-                shouldHandleSight = (nextSightTimestamp.toISOString().slice(11,19) < nextStopTimeTimestamp.slice(11,19)); //compare the time parts
+                let nextStopTimeTimestamp = isStopTimeArrival ? stopTimes[stopTimeIndex].arrival_time : stopTimes[stopTimeIndex-1].departure_time;
+                nextStopTimeTimestamp = pretendUtc(nextStopTimeTimestamp);
+                let nextSightTimestamp = new Date(pretendUtc(sights[sightIndex].timestamp).getTime() + 1000 * lateSeconds);
+                shouldHandleSight = (nextSightTimestamp.toISOString().slice(11,19) < nextStopTimeTimestamp.toISOString().slice(11,19)); //compare the time parts
             }
             if (shouldHandleSight) {
                 window.journeyEvents.push({isSight: true, content: sights[sightIndex++]})

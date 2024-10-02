@@ -5,6 +5,12 @@ function formatStop(stop) {
     return `<a href="/stops.html?feed_id=${stop.feed_id}&stop_id=${stop.stop_id}">${stop.stop_name}</a>`;
 }
 
+function pretendUtc(timeString) {
+    // YYYY-MM-DDThh:mm:ss+ffff
+    timeString = timeString.slice(0, 19) + "Z"
+    return new Date(timeString);
+}
+
 function formatStopTime(stopTime, preferArrival=false) {
     let time;
     if (stopTime.arrival_time === "") {
@@ -14,13 +20,8 @@ function formatStopTime(stopTime, preferArrival=false) {
     } else {
         time = preferArrival ? stopTime.arrival_time : stopTime.departure_time;
     }
-    time = new Date(time);
-    let timeStr = `${pad(time.getHours())}:${pad(time.getMinutes())}`;
+    let timeStr = pretendUtc(time).toISOString().slice(11, 16) //hh:mm
     return `${formatStop(stopTime.stop)} (${timeStr})`
-}
-
-function pad(num) {
-    return num<10? "0"+num : num;
 }
 
 function setValueAtId(id, value, setInnerHTML=false) 
@@ -48,16 +49,16 @@ function findGetParameter(parameterName) {
 }
 
 function getDate(dateString) {
-    let d = new Date(dateString);
-    return `${pad(d.getFullYear())}-${pad(d.getMonth())}-${pad(d.getDay())}`;
+    console.log("getdate", dateString)
+    return pretendUtc(dateString).toISOString().slice(0, 10);
 }
 
 function getTime(dateString) {
+    console.log("gettime", dateString)
     if (dateString === undefined) {
         return "";
     }
-    let d = new Date(dateString) 
-    return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    return pretendUtc(dateString).toISOString().slice(11, 19);
 }
 
 function getRouteColorCss(route) {
