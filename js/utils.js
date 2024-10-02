@@ -14,8 +14,13 @@ function formatStopTime(stopTime, preferArrival=false) {
     } else {
         time = preferArrival ? stopTime.arrival_time : stopTime.departure_time;
     }
-    let timeStr = new Date(time).toISOString().slice(11, 16) //hh:mm
+    time = new Date(time);
+    let timeStr = `${pad(time.getHours())}:${pad(time.getMinutes())}`;
     return `${formatStop(stopTime.stop)} (${timeStr})`
+}
+
+function pad(num) {
+    return num<10? "0"+num : num;
 }
 
 function setValueAtId(id, value, setInnerHTML=false) 
@@ -43,14 +48,16 @@ function findGetParameter(parameterName) {
 }
 
 function getDate(dateString) {
-    return new Date(dateString).toISOString().slice(0, 10);
+    let d = new Date(dateString);
+    return `${pad(d.getFullYear())}-${pad(d.getMonth())}-${pad(d.getDay())}`;
 }
 
 function getTime(dateString) {
     if (dateString === undefined) {
         return "";
     }
-    return new Date(dateString).toISOString().slice(11, 19);
+    let d = new Date(dateString) 
+    return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
 function getRouteColorCss(route) {
