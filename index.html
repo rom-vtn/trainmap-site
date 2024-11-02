@@ -44,7 +44,10 @@
                     <li>Might add some later idk</li>
                 </ul>
             </div>
-            <table class="table col-12">
+            <div id="spinner" class="hidden m-auto spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+            </div>
+            <!-- <table class="table col-12">
                 <thead class="header">
                     <tr>
                         <th>Date</th>
@@ -58,9 +61,6 @@
                         <th>Next stop</th>
                     </tr>
                 </thead>
-                <div id="spinner" class="hidden m-auto spinner-border text-primary" role="status">
-                    <span class="sr-only"></span>
-                </div>
                 <tbody id="entries">
                     <tr><th>No entries yet.</th></tr>
                 </tbody>
@@ -68,6 +68,22 @@
             <footer class="col-12 mt-auto py-3">
                 <p class="text-center">By Romane with 💙</p>
             </footer>
+        </div> -->
+        <div class="col-12 container-fluid">
+            <div class="row header bg-dark">
+                <div class="col-12 text-center">Route</div>
+                <div class="col-6 col-md-3">📅 Date</div>
+                <div class="col-6 col-md-3">🕒 Time</div>
+                <div class="col-6 col-md-3">ℹ️ Source feed</div>
+                <div class="col-6 col-md-3">❓ Type of transit</div>
+                <div class="col-6 col-md-3">🚀 Start</div>
+                <div class="col-6 col-md-3">🏁 End</div>
+                <div class="col-6 col-md-3">👀 Previous Stop</div>
+                <div class="col-6 col-md-3">👉 Next Stop</div>
+            </div>
+            <div id="entries" class="container-fluid">
+                <span class="col"><strong>No entries yet.</strong></span>
+            </div>
         </div>
         
         

@@ -49,17 +49,18 @@ function displayPage(pageNumber) {
     const sightSlice = window.sights.slice(PAGE_LENGTH*pageNumber, PAGE_LENGTH*(pageNumber+1))
     for (const inSliceIndex in sightSlice) {
         const realTrainSight = sightSlice[inSliceIndex]
-        const line = `<tr id="sight-row-${(+PAGE_LENGTH)*(+pageNumber) + (+inSliceIndex)}">
-            <td>${getDate(realTrainSight.timestamp)}</td>
-            <td>${getTime(realTrainSight.timestamp)}</td>
-            <td><a href="/trips.html?feed_id=${realTrainSight.sight.feed_id}&trip_id=${realTrainSight.sight.trip.trip_id}">${realTrainSight.sight.feed.display_name}</a></td>
-            <td>${formatRouteType(realTrainSight.sight.trip.route.type)}</td>
-            <td style="${getRouteColorCss(realTrainSight.sight.trip.route)}">${realTrainSight.sight.route_name}</td>
-            <td>${formatStopTime(realTrainSight.sight.first_st, false)}</td>
-            <td>${formatStopTime(realTrainSight.sight.last_st, true)}</td>
-            <td>${formatStopTime(realTrainSight.sight.st_before, false)}</td>
-            <td>${formatStopTime(realTrainSight.sight.st_after, true)}</td>
-        </tr>`
+        const line = `<div class="row py-2 border" id="sight-row-${(+PAGE_LENGTH)*(+pageNumber) + (+inSliceIndex)}">
+            <div class="col-12 col-md-12 text-center" style="${getRouteColorCss(realTrainSight.sight.trip.route)};text-align:auto"><h2>${realTrainSight.sight.route_name}</h2></div>
+            <div class="col-6 col-md-3">📅 ${getDate(realTrainSight.timestamp)}</div>
+            <div class="col-6 col-md-3">🕒 ${getTime(realTrainSight.timestamp)}</div>
+            <div class="col-6 col-md-3">ℹ️ <a href="/trips.html?feed_id=${realTrainSight.sight.feed_id}&trip_id=${realTrainSight.sight.trip.trip_id}">${realTrainSight.sight.feed.display_name}</a></div>
+            <div class="col-6 col-md-3">❓ ${formatRouteType(realTrainSight.sight.trip.route.type)}</div>
+            <div class="col-6 col-md-3">🚀 ${formatStopTime(realTrainSight.sight.first_st, false)}</div>
+            <div class="col-6 col-md-3">🏁 ${formatStopTime(realTrainSight.sight.last_st, true)}</div>
+            <div class="col-6 col-md-3">👀 ${formatStopTime(realTrainSight.sight.st_before, false)}</div>
+            <div class="col-6 col-md-3">👉 ${formatStopTime(realTrainSight.sight.st_after, true)}</div>
+        </div>`
+
         lines += line
     }
     setValueAtId("entries", lines, true);
