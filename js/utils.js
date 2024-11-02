@@ -62,10 +62,15 @@ function getTime(dateString) {
 }
 
 function getRouteColorCss(route) {
-    if (route.color === "") {
-        return "";
+    let routeColor = route.color;
+    if (routeColor === "") {
+        routeColor = "FFFFFF";
     }
-    return `color:#${route.text_color};background-color:#${route.color}`;
+    let routeTextColor = route.text_color;
+    if (routeTextColor === "") {
+        routeTextColor = "000000";
+    }
+    return `color:#${routeTextColor};background-color:#${routeColor}`;
 }
 
 function nullableBoolToEmoji(nullableBool) {
