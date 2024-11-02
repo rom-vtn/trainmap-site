@@ -1,7 +1,9 @@
 //default to SB bridge
 // const defaultCoords = [49.233955084486965,6.961684226989747]
+//SB Hbf
+const defaultCoords = [49.24123299474095, 6.991338729858399]
 //special KA GPN22 edition
-const defaultCoords = [48.992847, 8.401682];
+// const defaultCoords = [48.992847, 8.401682];
 
 
 //setup triggers
