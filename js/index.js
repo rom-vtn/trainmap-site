@@ -50,7 +50,7 @@ function displayPage(pageNumber) {
     for (const inSliceIndex in sightSlice) {
         const realTrainSight = sightSlice[inSliceIndex]
         const line = `<div class="row py-2 border" id="sight-row-${(+PAGE_LENGTH)*(+pageNumber) + (+inSliceIndex)}">
-            <div class="col-12 col-md-12 text-center" style="${getRouteColorCss(realTrainSight.sight.trip.route)};text-align:auto"><h2>${realTrainSight.sight.route_name}</h2></div>
+            <div class="col-12 col-md-12 text-center" style="${getRouteColorCss(realTrainSight.sight.trip.route)};text-align:auto"><h2>${realTrainSight.sight.route_name} (→ ${realTrainSight.sight.last_st.stop.stop_name})</h2></div>
             <div class="col-6 col-md-3">📅 ${getDate(realTrainSight.timestamp)}</div>
             <div class="col-6 col-md-3">🕒 ${getTime(realTrainSight.timestamp)}</div>
             <div class="col-6 col-md-3">ℹ️ <a href="/trips.html?feed_id=${realTrainSight.sight.feed_id}&trip_id=${realTrainSight.sight.trip.trip_id}">${realTrainSight.sight.feed.display_name}</a></div>
