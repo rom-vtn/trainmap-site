@@ -88,10 +88,8 @@ function sightsApiCall() {
 }
 
 function scrollToLatest() {
-    //FIXME fix the timezone issue
-    //temp solution is to add a 2hr offset since we're at UTC+2
     let scrollRow = null;
-    const thresholdMs = Date.parse(new Date().toISOString()) + 1000 * 3600 * 2
+    const thresholdMs = Date.parse(new Date().toISOString())
     for (i in window.sights) {
         const realSight = window.sights[i]
         const sightTimestampMs = Date.parse(realSight.timestamp);
